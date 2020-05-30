@@ -7,6 +7,10 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/bar_layout"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -49,12 +53,12 @@
         android:layout_marginTop="20dp"/>
 
     <Button
+        android:id="@+id/register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Register"
-        android:id="@+id/register"
-        android:textAllCaps="false"
+        android:layout_marginTop="20dp"
         android:background="@color/colorPrimaryDark"
-        android:layout_marginTop="20dp"/>
+        android:text="Register"
+        android:textAllCaps="false" />
 
 </LinearLayout>

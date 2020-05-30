@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -22,9 +23,12 @@ import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    //declaring Var
     MaterialEditText number,confirmnumber;
     Button register;
 
+
+    //connect variables with buttons
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +39,19 @@ public class RegisterActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+// pass the number to txtNumber and txtconfirmnumber
+
+                String txtNumber =  number.getText().toString();
+                String txtConfirmnumber = confirmnumber.getText().toString();
+                if (TextUtils.isEmpty(txtNumber) || TextUtils.isEmpty(txtConfirmnumber) ){
+
+                    Toast.makeText(RegisterActivity.this, "All fields required", Toast.LENGTH_SHORT).show();
+
+                }else{
+                    registerNewAccount(txtNumber,txtConfirmnumber);
+
+                }
+
 
             }
         });
@@ -42,7 +59,12 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private void registerNewAccount(final String number, final String confirmnumber ){
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+//register new account function to register my users
+    private void registerNewAccount(final String number, final String confirmnumber){
         final ProgressDialog progressDialog = new ProgressDialog( RegisterActivity.this );
         progressDialog.setCancelable(false);
         progressDialog.setIndeterminate(false);
@@ -55,6 +77,8 @@ public class RegisterActivity extends AppCompatActivity {
                 if (response.equals("Succesfully Registered")){
                     progressDialog.dismiss();
                     Toast.makeText(RegisterActivity.this, response, Toast.LENGTH_SHORT).show();
+                    //i can set the activity to go to login after they register or go into the app
+
                     startActivity(new Intent(RegisterActivity.this,MainActivity.class));
                     finish();
 
@@ -86,8 +110,7 @@ public class RegisterActivity extends AppCompatActivity {
         MySingleton.getInstance(RegisterActivity.this).addToRequestQueue(request);
 
 
-                //MySingleton.getInstance(RegisterActivity.this).addToRequestQueue(request);
-                 //maybe an error here
+
 
 
     }
