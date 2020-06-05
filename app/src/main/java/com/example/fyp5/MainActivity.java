@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 }else{
 
                     login(txtNumber);
-                    user();
+                  //  user();
                 }
             }
         }  );
@@ -83,11 +83,11 @@ public class MainActivity extends AppCompatActivity {
 
         if (loginStatus.equals("Logged in")){
 
-            Intent intent = new Intent(this, AppStartActivity.class);
-            startActivity(new Intent(getApplicationContext(),AppStartActivity.class));
+          //  Intent intent = new Intent(this, AppStartActivity.class);
+           // startActivity(new Intent(getApplicationContext(),AppStartActivity.class));
 
-            //Intent intent = new Intent(this, Verification.class);
-          //startActivity(new Intent(getApplicationContext(),Verification.class));
+            Intent intent = new Intent(this, Verification.class);
+          startActivity(new Intent(getApplicationContext(),Verification.class));
         }
 
 
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
                     progressDialog.dismiss();
                     Toast.makeText(MainActivity.this, response, Toast.LENGTH_SHORT).show();
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-
+                    user();
                     if (loginstate.isChecked()) {
 
                         editor.putString(getResources().getString(R.string.prefLoginState), "Logged in");
@@ -132,13 +132,13 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     editor.apply();
-                   // startActivity(new Intent(MainActivity.this, AppStartActivity.class));
-                    // startActivity(new Intent(MainActivity.this,Verification.class));
+                   //startActivity(new Intent(MainActivity.this, AppStartActivity.class));
+                     startActivity(new Intent(MainActivity.this,Verification.class));
                 }else if(response.equals("Wrong Number Or you Need to Register")){
                     progressDialog.dismiss();
                     Toast.makeText(MainActivity.this, response, Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(MainActivity.this,MainActivity.class));
-
+                    onResume();
                 } else{
                     progressDialog.dismiss();
                     Toast.makeText(MainActivity.this, response, Toast.LENGTH_SHORT).show();

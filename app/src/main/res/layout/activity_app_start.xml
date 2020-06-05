@@ -156,29 +156,28 @@
         android:text="Upload Image From Gallery"
         app:layout_constraintBottom_toTopOf="@+id/progressBar"
         app:layout_constraintEnd_toStartOf="@+id/camera"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLocation"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.111" />
 
     <Button
         android:id="@+id/camera"
-        android:layout_width="149dp"
-        android:layout_height="49dp"
+        android:layout_width="147dp"
+        android:layout_height="50dp"
         android:layout_marginTop="60dp"
         android:background="@color/colorAccent"
         android:text="Take a Picture"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.889"
+        app:layout_constraintHorizontal_bias="0.851"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLocation"
-        app:layout_constraintVertical_bias="0.64" />
+        app:layout_constraintTop_toBottomOf="@+id/btnLocation" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="163dp"
-        android:layout_height="87dp"
+        android:layout_width="195dp"
+        android:layout_height="114dp"
         android:layout_marginTop="16dp"
         app:layout_constraintBottom_toTopOf="@+id/uploadimage"
         app:layout_constraintEnd_toEndOf="parent"
@@ -192,16 +191,14 @@
         android:id="@+id/uploadimage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="446dp"
-        android:layout_marginBottom="92dp"
         android:backgroundTint="@color/colorPrimaryDark"
         android:text="Upload Photos to Emergency Servuces"
         app:layout_constraintBottom_toTopOf="@+id/image_call"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.365"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/progressBar"
+        app:layout_constraintVertical_bias="0.643" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -105,7 +105,7 @@ TextView work;
             }
         });
 
-                        //UPLOAD LOCATION BUTTON TO MYSQL
+                        //UPLOAD LOCATION  TO MYSQL
 
         findViewById(R.id.btnUploadLocation).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,11 +131,10 @@ TextView work;
         });
 
 
-        //Image from Gallery Upload
+                                        //Image from Gallery Upload
 
         uploadimage = (Button) findViewById(R.id.uploadimage);
         gallery = (Button) findViewById(R.id.gallery);
-       // editText = (EditText) findViewById(R.id.editText);
         imageView = (ImageView) findViewById(R.id.imageView);
 
 
@@ -143,8 +142,6 @@ TextView work;
 findViewById(R.id.gallery).setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-
-
 
 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 intent.setType("image/*");
@@ -154,7 +151,7 @@ startActivityForResult(Intent.createChooser(intent, "Pick an image"),1);
 });
 
 
-// IMAGE UPLOAD
+                                      // IMAGE UPLOAD
 
 findViewById(R.id.uploadimage).setOnClickListener(new View.OnClickListener() {
     @Override
@@ -164,14 +161,14 @@ findViewById(R.id.uploadimage).setOnClickListener(new View.OnClickListener() {
         if (imageView.getDrawable() == null){
             Toast.makeText(AppStartActivity.this, "Please select an image to upload", Toast.LENGTH_SHORT).show();
         }else{
-
+                //Change my picture into BLOB file to upload to mysql
             BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
             Bitmap bmap = drawable.getBitmap();
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             bmap.compress(Bitmap.CompressFormat.PNG,100,bos);
             byte[] bb = bos.toByteArray();
             String image = Base64.encodeToString(bb,Base64.DEFAULT);
-
+//Pass the Blop picture file as image, and the user to the fuction that stores them
             UploadImage(txtuser,image);
 
 
@@ -181,7 +178,7 @@ findViewById(R.id.uploadimage).setOnClickListener(new View.OnClickListener() {
     }
 });
 
-//CAMERA
+                             //TAKE A PICTURE FROM CAMERA
 
         camera = (Button)findViewById(R.id.camera);
      if(ContextCompat.checkSelfPermission(AppStartActivity.this,Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ){
@@ -199,11 +196,7 @@ Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 });
 
 
-
-
-
-
-        //LOGOUT FUNCTION
+                                   //LOGOUT FUNCTION
         logout = findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -215,9 +208,6 @@ Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 finish();
             }
         });
-
-
-
 
     }
 
@@ -259,7 +249,7 @@ Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         final ProgressDialog progressDialog = new ProgressDialog( AppStartActivity.this );
         progressDialog.setCancelable(false);
         progressDialog.setIndeterminate(false);
-        progressDialog.setTitle("Uploading Your Image To Emergency Units");
+        progressDialog.setTitle("Uploading Your Image To Emergency Services");
         progressDialog.show();
         String uRL = "http:/10.0.2.2/loginregister/uploadimage.php";
         StringRequest request = new StringRequest(Request.Method.POST, uRL, new Response.Listener<String>() {
@@ -286,7 +276,7 @@ Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
                 Toast.makeText(AppStartActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
-                Toast.makeText(AppStartActivity.this, "Please activaye", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AppStartActivity.this, "Please your Mobile Data or Wifi", Toast.LENGTH_SHORT).show();
             }
         }){
             @Override
@@ -302,32 +292,6 @@ Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         MySingleton.getInstance(AppStartActivity.this).addToRequestQueue(request);
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     //Location Upload to Mysql
@@ -467,15 +431,6 @@ Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 private void upload(){
         final ProgressDialog progressDialog = new ProgressDialog(AppStartActivity.this);
 
-
 }
-
-
-
-
-
-
-
-
 
 }
