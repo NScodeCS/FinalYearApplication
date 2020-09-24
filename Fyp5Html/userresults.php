@@ -4,42 +4,56 @@ require_once "config.php";
 
 
 $sqlAdress= mysqli_query($config,"SELECT Address, Latitute, test From users_tabletest WHERE number LIKE $number");
+if($sqlAdress == null)
+{echo "User not found make sure you are searching for the correct user: " .$number;
 
+}
+else{
 $row = mysqli_fetch_array($sqlAdress);
 
 //echo $row['Address'] .$row['Latitute'] .$row['test'];
 $latitute = substr($row['Latitute'], 10);
 $long = substr($row['test'], 11);
 
-?>
+}
 
+?>
 <div id="map" ></div>
 <html>
 <head>
+<meta charset="utf-8">
+    <meta name= "viewport" content="initial-scale=1.0, user-scalable=no">
 
     <style>
        /* Set the size of the div element that contains the map */
       #map_canvas {
-        height: 500px;  /* The height is 400 pixels */
-        width: 100%;  /* The width is the width of the web page */
+        height: 900px;  
+        width: 100%;  
        }
     </style>
   </head>
   <body>
     <h3>User <?php echo $number; ?> location and pictures</h3>
+    
+    <form action = "welcome.php" method = "post">           
+                <input type = "submit" value = " New Search "/><br />
+
+             </form>
+
     <!--The div element for the map -->
     <div id="map_canvas"></div>
     <script>
-    var map;
+  
 // Initialize and add the map
 function initMap() {
-
+  var map;
 var global_markers = [];  
 var lat= <?php echo $latitute?>;
 var long =<?php echo $long;?>;
 var user = <?php echo $number?>;
 var markers = [[lat, long, user]];
-var position = [[lat,long]];
+var position = [lat,long];
+var service;
 
 var infowindow = new google.maps.InfoWindow({});
 
@@ -47,49 +61,62 @@ function initialize() {
     geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(35.095192,33.203430 );
     var myOptions = {
-        zoom: 9,
+        zoom: 10,
         center: latlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }
     map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
     addMarker();
-    getNearbyPlaces(position);
     
-}
-function getNearbyPlaces() {
-    let request = {
-    location: position,
-    rankBy: google.maps.places.RankBy.DISTANCE,
-    keyword: 'hospital'
-    };
 
-    service = new google.maps.places.PlacesService(map);
-    service.nearbySearch(request, nearbyCallback);
-}
 
-// Handle the results (up to 20) of the Nearby Search
-function nearbyCallback(results, status) {
-    if (status == google.maps.places.PlacesServiceStatus.OK) {
-    addMarker(results);
-    }
-}
 
-function createMarkers() {
-    places.forEach(place => {
-    let marker = new google.maps.Marker({
-        position: place.geometry.location,
-        map: map,
-        title: place.name
-    });
 
-    });
+
+var service;
+
+var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+
+
+  var pyrmont = new google.maps.LatLng(lat,long);
+
   
-   
+
+  var request = {
+    location: pyrmont,
+    radius: '30',
+    query: 'hospital'
+    
+    
+  };
+
+  service = new google.maps.places.PlacesService(map);
+  service.textSearch(request, callback);
+
+
+function callback(results, status) {
+  if (status == google.maps.places.PlacesServiceStatus.OK) {
+    for (var i = 0; i < results.length; i++) {
+      var place = results[i];
+      createMarker(results[i]);
+    }
+  }
 }
 
+function createMarker(place) {
+
+new google.maps.Marker({
+    position: place.geometry.location,
+    map: map,
+  
+    icon:"http://maps.google.com/mapfiles/kml/shapes/hospitals.png"
+});
+}
+
+}
 function addMarker() {
     for (var i = 0; i < markers.length; i++) {
-        // obtain the attribues of each marker
+      
         var lat = parseFloat(markers[i][0]);
         var lng = parseFloat(markers[i][1]);
         var trailhead_name = markers[i][2];
@@ -99,10 +126,12 @@ function addMarker() {
         var contentString = "<html><body><div><p><h2>" + trailhead_name + "</h2></p></div></body></html>";
 
         var marker = new google.maps.Marker({
+            zoom: 4,
             position: myLatlng,
             map: map,
+            icon:"http://maps.google.com/mapfiles/kml/paddle/grn-blank.png",
             title: "Coordinates: " + lat + " , " + lng + " | Trailhead name: " + user,
-    
+            label: ""+user,
         });
 
         marker['infowindow'] = contentString;
@@ -119,13 +148,10 @@ function addMarker() {
 window.onload = initialize;
 }
     </script>
-    <!--Load the API from the specified URL
-    * The async attribute allows the browser to render the page while the API loads
-    * The key parameter will contain your own API key (which is not needed for this tutorial)
-    * The callback parameter executes the initMap() function
-    -->
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?=AIzaSyDeaXNyQ1onKQkIGmfxmpEc5VsG7hbLit0&libraries=places&callback=initMap">
+
+    <script 
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0bUypVv1SHzTAMNV9wUQVSSEyWIw7vBg&callback=initMap&libraries=places">
+    
     </script>
   </body>
 
